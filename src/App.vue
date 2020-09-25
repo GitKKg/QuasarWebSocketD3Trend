@@ -24,7 +24,7 @@
 
    updated: function () {
      console.log("Starting connection to WebSocket Server")
-     gv.wsocket = new WebSocket('ws://0.0.0.0:8000/web')
+     gv.wsocket = new WebSocket('ws://0.0.0.0:8000/websocket')
      console.log(gv.wsocket)
      gv.wsocket.onmessage = function(event) {
        console.log(event);
