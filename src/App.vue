@@ -43,6 +43,15 @@
      };
      gv.wsocket.onmessage = function(event) {
        console.log('WebSockets message: ' + event.data + '\n');
+       var stockObj =JSON.parse(event.data)
+
+       // in Haskell server side ,its defition: 
+       /* data StockData = StockData {
+        *   code :: String,
+        *   pricesL :: [Float]
+        * } deriving (Generic , Show) */
+       
+       console.log('stock price list is: ' + stockObj.pricesL + '\n');
      };
      //gv.wsocket.send("Clinet send data to you!\n")
    },
