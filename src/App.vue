@@ -27,7 +27,7 @@
      gv.wsocket = new WebSocket('ws://0.0.0.0:8000/websocket')
      console.log(gv.wsocket)
      gv.wsocket.onmessage = function(event) {
-       console.log(event);
+       console.log(event)
      }
 
      gv.wsocket.onopen = function(event) {
@@ -36,23 +36,36 @@
        gv.wsocket.send("Client knows connection opened!\n")
      }
      gv.wsocket.onerror = function(event) {
-       console.log('WebSockets error: ' + event.data + '\n');
+       console.log('WebSockets error: ' + event.data + '\n')
      }
      gv.wsocket.onclose = function(event) {
-       console.log('WebSockets close: ' + event.data + '\n');
-     };
+       console.log('WebSockets close: ' + event.data + '\n')
+     }
      gv.wsocket.onmessage = function(event) {
-       console.log('WebSockets message: ' + event.data + '\n');
-       var stockObj =JSON.parse(event.data)
+       console.log('WebSockets message: ' + event.data + '\n')
+       var msg =JSON.parse(event.data)
 
-       // in Haskell server side ,its defition: 
+       switch(msg.mpType) {
+         case "priceL" :
+           console.log('stock price list is: ' + msg.mpPayload.pricesL + '\n')
+         case "words" :
+           console.log('server say : ' + msg.mpWords)
+       }
+       //gv.wsocket.send('clietn say,got your hello!\n')
+
+       // in Haskell server side ,its defition:
+       /* data MessagePack = MessagePack {
+        *   mpType :: String,
+        *   mpWords :: String, -- talking words
+        *   mpPayload :: StockData
+        * } deriving (Generic, Show) */
        /* data StockData = StockData {
         *   code :: String,
         *   pricesL :: [Float]
         * } deriving (Generic , Show) */
        
-       console.log('stock price list is: ' + stockObj.pricesL + '\n');
-     };
+       //console.log('stock price list is: ' + stockObj.pricesL + '\n')
+     }
      //gv.wsocket.send("Clinet send data to you!\n")
    },
 
